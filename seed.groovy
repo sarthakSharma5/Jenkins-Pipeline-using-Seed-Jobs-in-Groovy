@@ -71,10 +71,8 @@ fi
 }
 freeStyleJob('job4-mail-dev') {
   description('mail developer if error in code')
-  trigger {
-    parameters {
-        stringParam('myParameterName', 'sendmail', 'called if job3 fails')
-    }
+  parameters {
+    stringParam('myParameterName', 'sendmail', 'called if job3 fails')
   }
   steps {
     shell('''
