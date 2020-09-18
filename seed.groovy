@@ -79,7 +79,7 @@ sudo python3 /root/mail.py
 ''')
   }
 }
-buildPipelineView('DevOps Task 6: Seed Jobs') {
+buildPipelineView('DevOpsTask6') {
     filterBuildQueue()
     filterExecutors()
     title('CI/CD pipline using Seed Job')
