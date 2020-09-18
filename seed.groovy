@@ -8,7 +8,7 @@ freeStyleJob('job1-pull-repo') {
   }
   steps {
     shell(''' echo "copying code to workspace"
-if sudo ls | grep /root/task6
+if sudo ls /root/ | grep task6
 then
   echo "dir exists"
 else
