@@ -27,16 +27,17 @@ freeStyleJob('job2-deploy-code') {
     shell ('''
 if sudo kubectl get deploy | grep myweb
 then
-    echo "WebApp already running"
+    echo "Clearing Environment"
+    kubectl delete all --all
 fi
-if sudo ls /root/task6/ | grep *.html
+if sudo ls /root/task6/ | grep .html
 then
     echo "Launching WebApp"
     sudo kubectl apply -f htdeploy.txt
     pod=$(sudo kubectl get pods -l app=myweb -o jsonpath="{.items[0].metadata.name}")
     sleep 30
     sudo kubectl cp /root/task6/*.html $pod:/usr/local/apache2/htdocs
-elif sudo ls /root/task6/ | grep *.php
+elif sudo ls /root/task6/ | grep .php
 then
     echo "Launching WebApp"
     sudo kubectl apply -f phdeploy.txt
