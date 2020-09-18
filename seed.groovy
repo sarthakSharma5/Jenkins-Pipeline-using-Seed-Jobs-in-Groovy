@@ -2,19 +2,19 @@ freeStyleJob('job1-pull-repo') {
   description("pull codes from GitHub")
   scm {
     github('sarthakSharma5/repo_web', 'master')
-  }/*
+  }
   triggers {
     scm("* * * * *")
-  }*/
+  }
   steps {
     shell(''' echo "copying code to workspace"
-if sudo ls | grep task6
+if sudo ls | grep /root/task6
 then
   echo "dir exists"
 else
-  sudo mkdir /task6
+  sudo mkdir /root/task6
 fi
-sudo cp -rvf * /task6
+sudo cp -rvf * /root/task6/
 ''')
   }
 }
@@ -29,20 +29,20 @@ if sudo kubectl get deploy | grep myweb
 then
     echo "WebApp already running"
 fi
-if sudo ls /root/workspace | grep *.html
+if sudo ls /root/task6/ | grep *.html
 then
     echo "Launching WebApp"
     sudo kubectl apply -f htdeploy.txt
     pod=$(sudo kubectl get pods -l app=myweb -o jsonpath="{.items[0].metadata.name}")
     sleep 30
-    sudo kubectl cp /root/workspace/*.html $pod:/usr/local/apache2/htdocs
-elif sudo ls /root/workspace | grep *.php
+    sudo kubectl cp /root/task6/*.html $pod:/usr/local/apache2/htdocs
+elif sudo ls /root/task6/ | grep *.php
 then
     echo "Launching WebApp"
     sudo kubectl apply -f phdeploy.txt
     pod=$(sudo kubectl get pods -l app=myweb -o jsonpath="{.items[0].metadata.name}")
     sleep 30
-    sudo kubectl cp /root/workspace/*.php $pod:/var/www/html
+    sudo kubectl cp /root/task6/*.php $pod:/var/www/html
 else
     echo "appropriate file not found"
 fi
@@ -75,7 +75,7 @@ freeStyleJob('job4-mail-dev') {
   steps {
     shell('''
 # execute bash commands
-sudo python3 /root/mail.py
+sudo python3 /root/task6/mail.py
 ''')
   }
 }
@@ -83,9 +83,9 @@ buildPipelineView('DevOpsTask6') {
     filterBuildQueue()
     filterExecutors()
     title('CI/CD pipline using Seed Job')
-    displayedBuilds(3)
-    selectedJob('Job1-pull-repo')
+    displayedBuilds(1)
+    selectedJob('job1-pull-repo')
     alwaysAllowManualTrigger()
     showPipelineParameters()
-    refreshFrequency(30)
+    refreshFrequency(5)
 }
