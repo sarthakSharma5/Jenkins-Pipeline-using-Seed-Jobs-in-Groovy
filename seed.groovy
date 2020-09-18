@@ -82,10 +82,10 @@ sudo python3 /root/task6/mail.py
 buildPipelineView('DevOpsTask6') {
     filterBuildQueue()
     filterExecutors()
-    title('CI/CD pipline using Seed Job')
-    displayedBuilds(1)
+    title('CI/CD pipeline using Seed Job')
+    displayedBuilds(3)
     selectedJob('job1-pull-repo')
     alwaysAllowManualTrigger()
     showPipelineParameters()
-    refreshFrequency(5)
+    refreshFrequency(15)
 }
