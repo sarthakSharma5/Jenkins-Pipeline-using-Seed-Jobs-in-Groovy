@@ -33,14 +33,14 @@ fi
 if sudo ls /root/task6/ | grep .html
 then
     echo "Launching WebApp"
-    sudo kubectl apply -f htdeploy.txt
+    sudo kubectl apply -f htdeploy.yaml
     pod=$(sudo kubectl get pods -l app=myweb -o jsonpath="{.items[0].metadata.name}")
     sleep 30
     sudo kubectl cp /root/task6/*.html $pod:/usr/local/apache2/htdocs
 elif sudo ls /root/task6/ | grep .php
 then
     echo "Launching WebApp"
-    sudo kubectl apply -f phdeploy.txt
+    sudo kubectl apply -f phdeploy.yaml
     pod=$(sudo kubectl get pods -l app=myweb -o jsonpath="{.items[0].metadata.name}")
     sleep 30
     sudo kubectl cp /root/task6/*.php $pod:/var/www/html
