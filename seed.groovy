@@ -44,7 +44,7 @@ then
     sleep 30
     sudo kubectl cp /root/workspace/*.php $pod:/var/www/html
 else
-	echo "appropriate file not found"
+    echo "appropriate file not found"
 fi
 ''')
   }
@@ -59,25 +59,33 @@ freeStyleJob('job3-check-status') {
 status=$(curl -o /dev/null -s -w %{http_code} 192.168.99.100:31180/) #put your ip
 if [ $status == 200 ]
 then
-	echo "OK"
-	exit 0
+    echo "OK"
+    exit 0
 else
-	echo "Error"
+    echo "Error"
     sudo curl --user admin:goloo005 "http://192.168.99.101:8085/job/job4-mail-dev/build?token=sendmail"
-	exit 1
+    exit 1
 fi
 ''')
   }
 }
 freeStyleJob('job4-mail-dev') {
   description('mail developer if error in code')
-  parameters {
-    stringParam('myParameterName', 'sendmail', 'called if job3 fails')
-  }
+  authenticationToken('sendmail')
   steps {
     shell('''
 # execute bash commands
-date
+sudo python3 /root/mail.py
 ''')
   }
+}
+buildPipelineView('DevOps Task 6: Seed Jobs') {
+    filterBuildQueue()
+    filterExecutors()
+    title('CI/CD pipline using Seed Job')
+    displayedBuilds(3)
+    selectedJob('Job1-pull-repo')
+    alwaysAllowManualTrigger()
+    showPipelineParameters()
+    refreshFrequency(30)
 }
