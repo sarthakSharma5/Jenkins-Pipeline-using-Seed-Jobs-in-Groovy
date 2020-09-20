@@ -57,14 +57,14 @@ freeStyleJob('job3-check-status') {
   }
   steps {
     shell('''
-status=$(curl -o /dev/null -s -w %{http_code} 192.168.99.100:31180/) #put your ip
+status=$(curl -o /dev/null -s -w %{http_code} <K8S_CLUSTER>:31180/) #put IP of Minikube
 if [ $status == 200 ]
 then
     echo "OK"
     exit 0
 else
     echo "Error"
-    sudo curl --user admin:goloo005 "http://192.168.99.101:8085/job/job4-mail-dev/build?token=sendmail"
+    sudo curl --user admin:<your_password> "http://<SYSTEM_IP>:8085/job/job4-mail-dev/build?token=sendmail"
     exit 1
 fi
 ''')
