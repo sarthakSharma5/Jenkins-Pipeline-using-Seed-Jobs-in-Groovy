@@ -64,7 +64,7 @@ then
     exit 0
 else
     echo "Error"
-    sudo curl --user admin:<your_password> "http://<SYSTEM_IP>:8085/job/job4-mail-dev/build?token=sendmail"
+    sudo curl --user admin:<JENKINS_ADMIN_PASSWORD> "http://<SYSTEM_IP>:8085/job/job4-mail-dev/build?token=sendmail"  # Use Jenkins Admin Password
     exit 1
 fi
 ''')
